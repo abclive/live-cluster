@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import FacebookLoginButton from './FacebookLoginButton';
+import FacebookEventList from './FacebookEventList';
 
 class App extends Component
 {
@@ -8,7 +10,10 @@ class App extends Component
 
     render() {
         return (
-            <h1>Hello World!</h1>
+            <div className="App">
+                <FacebookLoginButton/>
+                <FacebookEventList/>
+            </div>
         );
     }
 }

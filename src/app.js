@@ -7,6 +7,9 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
 
+const FacebookController = require('./FacebookController');
+new FacebookController();
+
 app.ENV_MODE = 'DEV';
 
 let mainWindow;
@@ -34,6 +37,9 @@ function createWindow () {
         // when you should delete the corresponding element.
         mainWindow = null;
     });
+
+    // Clear Cache
+    //electron.session.defaultSession.clearStorageData([], (data) => {})
 }
 
 // This method will be called when Electron has finished

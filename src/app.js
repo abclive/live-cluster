@@ -8,7 +8,7 @@ const path = require('path');
 const url = require('url');
 
 const FacebookController = require('./FacebookController');
-new FacebookController();
+app.fbController = new FacebookController();
 
 app.ENV_MODE = 'DEV';
 

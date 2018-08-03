@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import FacebookLoginButton from './FacebookLoginButton';
-import FacebookEventList from './FacebookEventList';
+import withRoot from '../withRoot';
+import LandingPanel from './panels/LandingPanel';
 
 class App extends Component
 {
@@ -11,11 +11,10 @@ class App extends Component
     render() {
         return (
             <div className="App">
-                <FacebookLoginButton/>
-                <FacebookEventList/>
+                <LandingPanel/>
             </div>
         );
     }
 }
 
-export default App;
+export default withRoot(App);

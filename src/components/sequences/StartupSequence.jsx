@@ -46,11 +46,11 @@ class StartupSequence extends Component {
     }
 
     handleFacebookEventSelection(eventId) {
-        this.props.onSequenceEnd(eventId);
+        this.props.onSequenceEnd('fb', eventId);
     }
 
-    handleYoutubeSearch(keyword) {
-
+    handleYoutubeSearch(keywords) {
+        this.props.onSequenceEnd('yt', keywords);
     }
 
     renderClusterSelection() {

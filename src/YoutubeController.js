@@ -23,6 +23,7 @@ class YoutubeController {
     setupEvents() {
         ipcMain.on('yt-auth-request', this.onAuthRequest.bind(this));
         ipcMain.on('yt-count-keywords', this.onCountKeywords.bind(this));
+        ipcMain.on('yt-list-lives', this.onListLives.bind(this));
     }
 
     onAuthRequest(event) {
@@ -39,6 +40,37 @@ class YoutubeController {
         let eventSender = event.sender;
         this.countResultForKeywords(keywords, (result) => {
             eventSender.send('yt-keywords-count', result);
+        });
+    }
+
+    onListLives(event, keywords) {
+        let eventSender = event.sender;
+        this.listLiveVideos(keywords, (results) => {
+            let videoList = [];
+            for (let video of results) {
+                videoList.push({
+                    id: video.id.videoId
+                });
+            }
+            eventSender.send('yt-lives-list', videoList);
+        });
+    }
+
+    listLiveVideos(keywords, callback) {
+        const service = google.youtube('v3');
+        service.search.list({
+            auth: this.oAuthClient,
+            part: 'id',
+            q: keywords,
+            type: 'video',
+            eventType: 'live',
+            maxResults: 50,
+            safeSearch: 'none'
+        }, (err, response) => {
+            if (err) throw err;
+            if (response.status === 200 && response.data.pageInfo.totalResults > 0) {
+                callback(response.data.items);
+            }
         });
     }
 

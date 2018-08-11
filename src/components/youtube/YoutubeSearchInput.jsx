@@ -27,6 +27,7 @@ class YoutubeSearchInput extends Component {
         }
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleOnSubmit = this.handleOnSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -39,8 +40,10 @@ class YoutubeSearchInput extends Component {
         });
     }
 
-    handleOnSubmit(event) {
-
+    handleOnSubmit() {
+        if (this.props.onSubmit) {
+            this.props.onSubmit(this.state.keywords);
+        }
     }
 
     handleChange(event) {
@@ -65,7 +68,7 @@ class YoutubeSearchInput extends Component {
                     <Input id="keywords" value={this.state.keywords} onChange={this.handleChange} />
                     <FormHelperText id="keywords-helper-text">{resultCount}</FormHelperText>
                 </FormControl>
-                <Button className={this.props.classes.selectBtn} variant="contained" size="small" color="primary" disabled={!(this.state.keywords.length > 3)}>Select</Button>
+                <Button onClick={this.handleOnSubmit} className={this.props.classes.selectBtn} variant="contained" size="small" color="primary" disabled={!(this.state.keywords.length > 3)}>Select</Button>
             </div>
         );
     }

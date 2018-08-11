@@ -5,11 +5,12 @@
   "dependencies": {
     "@material-ui/core": "^1.4.2",
     "@material-ui/icons": "^2.0.0",
+    "fbgraph": "^1.4.4",
     "google-auth-library": "^1.6.1",
     "googleapis": "^32.0.0",
-    "fbgraph": "^1.4.4",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "youtube-player": "^5.5.0"
   },
   "devDependencies": {
     "electron": "^1.7.12",

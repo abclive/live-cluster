@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import withRoot from '../withRoot';
+import withRoot from '../../withRoot';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Icon } from '@material-ui/core';
 import { blue } from '@material-ui/core/colors';

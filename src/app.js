@@ -9,6 +9,8 @@ const url = require('url');
 
 const FacebookController = require('./FacebookController');
 app.fbController = new FacebookController();
+const YoutubeController = require('./YoutubeController');
+app.fbController = new YoutubeController();
 
 app.ENV_MODE = 'DEV';
 

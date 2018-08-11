@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import withRoot from '../withRoot';
+import PropTypes from 'prop-types';
+import withRoot from '../../withRoot';
 import { withStyles } from '@material-ui/core/styles';
-import { CircularProgress, List, ListItem, ListItemText, Typography, Icon } from '@material-ui/core';
+import { CircularProgress, List, ListItem, ListItemText, ListItemSecondaryAction, Typography, Icon, Button } from '@material-ui/core';
 
 const electron = window.require('electron');
 
@@ -59,7 +60,10 @@ class FacebookEventList extends Component
                         {this.state.eventList.map((eventInfo, key) => {
                             return(
                                 <ListItem key={key} button>
-                                    <ListItemText primary={eventInfo.name} secondary={eventInfo.description.substr(0, 150)}/>
+                                    <ListItemText primary={eventInfo.name} secondary={eventInfo.description.substr(0, 100)}/>
+                                    <ListItemSecondaryAction>
+                                        <Button variant="flat" color="primary" onClick={() => {this.props.onSelection(eventInfo.id)}}>Select</Button>
+                                    </ListItemSecondaryAction>
                                 </ListItem>
                             );
                         })}
@@ -70,5 +74,9 @@ class FacebookEventList extends Component
         return null;
     }
 }
+
+FacebookEventList.propTypes = {
+    onSelection: PropTypes.func.isRequired
+};
 
 export default withRoot(withStyles(styles)(FacebookEventList));

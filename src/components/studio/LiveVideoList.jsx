@@ -9,8 +9,7 @@ const styles = theme => ({
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
-        overflow: 'hidden',
-        backgroundColor: theme.palette.background.paper,
+        overflow: 'hidden'
     },
     gridList: {
         flexWrap: 'nowrap',
@@ -35,7 +34,6 @@ class LiveVideoList extends Component {
     render() {
         return (
             <div className={this.props.classes.root}>
-                <Typography variant="display1" gutterBottom>LIVE VIDEOS</Typography>
                 <GridList className={this.props.classes.gridList} cols={2.5}>
                     {this.state.videoList.map(video => (
                         <div className={this.props.classes.listItem}>

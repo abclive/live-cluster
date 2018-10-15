@@ -34,6 +34,8 @@ class YoutubeEmbedPlayer extends Component
         this.isMuted = false;
         this.currentVolume = 0;
         this.updateTimecodeTimer = null;
+        this.onVideoPlaying = props.onVideoPlaying || null;
+        this.allowReRender = props.allowReRender || false;
 
         this.updateTimecode = this.updateTimecode.bind(this);
     }
@@ -49,6 +51,7 @@ class YoutubeEmbedPlayer extends Component
         this.YTPlayer = new YoutubePlayer(this.refs.player, options);
         this.YTPlayer.on('stateChange', this.handlePlayerStateChange.bind(this));
         this.YTPlayer.on('error', this.handlePlayerError.bind(this));
+
         if (this.props.startVolume !== undefined) {
             this.setVolume(this.props.startVolume);
         }
@@ -60,6 +63,10 @@ class YoutubeEmbedPlayer extends Component
         }
         if (this.props.onRef)
             this.props.onRef(this);
+    }
+
+    shouldComponentUpdate() {
+        return this.allowReRender;
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -153,6 +160,9 @@ class YoutubeEmbedPlayer extends Component
                         this.currentDuration = result;
                     });
                 }
+                if (this.onVideoPlaying) {
+                    this.onVideoPlaying();
+                }
                 break;
             }
             case PlayerState.ENDED: {
@@ -170,7 +180,9 @@ class YoutubeEmbedPlayer extends Component
     }
 
     render() {
-        return <div className="Player-Embed-Youtube"><div ref="player"></div></div>;
+        let height = this.props.options.height || '100%';
+        let width = this.props.options.width || '100%';
+        return <div className="Player-Embed-Youtube" style={{height: height, width: width}}><div ref="player"></div></div>;
     }
 }
 

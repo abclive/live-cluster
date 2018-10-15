@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import withRoot from '../withRoot';
 import LandingPanel from './panels/LandingPanel';
 import StudioPanel from './panels/StudioPanel';
+import LiveMonitor from './LiveMonitor';
+
+const electron = window.require('electron');
 
 class App extends Component
 {
@@ -22,6 +25,7 @@ class App extends Component
             plateform: plateform,
             plateformInfo: plateformInfo
         });
+        electron.ipcRenderer.send('display-live-monitor');
     }
 
     renderPanel() {
@@ -31,6 +35,12 @@ class App extends Component
     }
 
     render() {
+        if (window.location && window.location.search) {
+            let route = window.location.search.substr(1);
+            if (route == 'live-window') {
+                return <LiveMonitor />
+            }
+        }
         return (
             <div className="App">
                 {this.renderPanel()}

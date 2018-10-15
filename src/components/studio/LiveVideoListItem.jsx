@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
 import LiveVideo from './LiveVideo';
 
+const electron = window.require('electron');
+
 const styles = theme => ({
     container: {
         width: '265px',
@@ -62,6 +64,12 @@ class LiveVideoListItem extends Component {
 
     constructor(props) {
         super(props);
+
+        this.handleCueLive = this.handleCueLive.bind(this);
+    }
+
+    handleCueLive() {
+        electron.ipcRenderer.send('cue-video', this.props.videoInfo);
     }
 
     render() {
@@ -76,7 +84,7 @@ class LiveVideoListItem extends Component {
                 </div>
                 <div className={this.props.classes.actions}>
                     <Button size="small" className={this.props.classes.overlayButton} variant="contained" color="primary">PREVIEW</Button>
-                    <Button size="small" className={this.props.classes.overlayButton} variant="contained" color="secondary">LIVE</Button>                    
+                    <Button size="small" onClick={this.handleCueLive} className={this.props.classes.overlayButton} variant="contained" color="secondary">LIVE</Button>                    
                 </div>
             </div>
         );

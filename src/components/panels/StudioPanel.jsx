@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import withRoot from '../../withRoot';
-import { Typography, Grid, Paper, CircularProgress } from '@material-ui/core';
+import { Typography, Grid, Button, CircularProgress } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import LiveVideoList from '../studio/LiveVideoList';
 
@@ -19,6 +19,24 @@ const styles = theme => ({
     loadingText: {
         textAlign: 'center',
         paddingTop: '10px'
+    },
+    videoListContainer: {
+        backgroundColor: theme.palette.background.paper,
+        position: 'fixed',
+        bottom: '0',
+        width: '100%'
+    },
+    videoListHeading: {
+        padding: '20px 30px',
+        position: 'relative'
+    },
+    videoListTitle: {
+        display: 'inline'
+    },
+    refreshBtn: {
+        display: 'inline-block',
+        position: 'absolute',
+        right: '30px'
     }
 });
 
@@ -32,6 +50,7 @@ class StudioPanel extends Component {
         };
         
         this.onLiveList = this.onLiveList.bind(this);
+        this.onRefresh = this.onRefresh.bind(this);
     }
 
     componentDidMount() {
@@ -45,6 +64,13 @@ class StudioPanel extends Component {
         this.setState({
             liveVideoList: liveVideoList,
             isLoading: false
+        });
+    }
+
+    onRefresh() {
+        electron.ipcRenderer.send('yt-list-lives', this.props.plateformInfo);
+        this.setState({
+            isLoading: true
         });
     }
 
@@ -63,6 +89,10 @@ class StudioPanel extends Component {
                 <div className={this.props.classes.monitors}>
                 </div>,
                 <div className={this.props.classes.videoListContainer}>
+                    <div className={this.props.classes.videoListHeading}>
+                        <Typography className={this.props.classes.videoListTitle} variant="display1">Live Videos <Typography className={this.props.classes.videoListTitle} variant="body1">matching {this.props.plateformInfo}</Typography></Typography>
+                        <Button className={this.props.classes.refreshBtn} onClick={this.onRefresh} variant="contained" size="small" color="primary">Refresh</Button>
+                    </div>
                     <LiveVideoList plateform={this.props.plateform} videoList={this.state.liveVideoList}/>
                 </div>
             );

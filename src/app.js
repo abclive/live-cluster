@@ -7,16 +7,18 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
 
-const FacebookController = require('./FacebookController');
+const FacebookController = require('./controllers/FacebookController');
 app.fbController = new FacebookController();
-const YoutubeController = require('./YoutubeController');
-app.fbController = new YoutubeController();
+const YoutubeController = require('./controllers/YoutubeController');
+app.ytController = new YoutubeController();
+const LiveWindowController = require('./controllers/LiveWindowController');
+app.liveWindowController = new LiveWindowController();
 
 app.ENV_MODE = 'DEV';
 
 let mainWindow;
 
-function createWindow () {
+function createMainWindow () {
     mainWindow = new BrowserWindow({width: 1280, height: 720});
 
     // Change URL depending on dev/prod environment
@@ -47,7 +49,7 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', createMainWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -62,6 +64,6 @@ app.on('activate', function () {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) {
-        createWindow();
+        createMainWindow();
     }
 });

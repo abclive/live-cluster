@@ -3,15 +3,16 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const OAuth2 = google.auth.OAuth2;
+const electron = require('electron');
 
 let config = {
     CLIENT_ID: '307982401448-mt0b7lfabtkops2jple0ndt3n0iirf19.apps.googleusercontent.com',
     CLIENT_SECRET: 'oZr1_BmnydFJo1VGacq3gjwL',
     REDIRECT_URI: 'urn:ietf:wg:oauth:2.0:oob',
     SCOPES: 'https://www.googleapis.com/auth/youtube',
-    TOKEN_DIR: './.credentials/'
+    TOKEN_DIR: electron.app.getPath('userData')
 };
-config.TOKEN_PATH = config.TOKEN_DIR + 'yt_token.json'
+config.TOKEN_PATH = config.TOKEN_DIR + '/yt_token.json'
 
 class YoutubeController {
 
@@ -176,13 +177,6 @@ class YoutubeController {
      * @param {Object} token The token to store to disk.
      */
     storeToken(token) {
-        try {
-            fs.mkdirSync(config.TOKEN_DIR);
-        } catch (err) {
-            if (err.code != 'EEXIST') {
-                throw err;
-            }
-        }
         fs.writeFile(config.TOKEN_PATH, JSON.stringify(token), (err) => {
             if (err) throw err;
             console.log('Token stored to ' + config.TOKEN_PATH);

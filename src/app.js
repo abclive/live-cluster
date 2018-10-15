@@ -7,14 +7,14 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
 
+app.ENV_MODE = 'PROD';
+
 const FacebookController = require('./controllers/FacebookController');
 app.fbController = new FacebookController();
 const YoutubeController = require('./controllers/YoutubeController');
 app.ytController = new YoutubeController();
 const LiveWindowController = require('./controllers/LiveWindowController');
-app.liveWindowController = new LiveWindowController();
-
-app.ENV_MODE = 'DEV';
+app.liveWindowController = new LiveWindowController(app.ENV_MODE);
 
 let mainWindow;
 

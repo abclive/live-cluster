@@ -21,7 +21,7 @@
   "main": "./src/app.js",
   "scripts": {
     "pack": "build --dir",
-    "dist": "build --mac",
+    "dist": "build -mwl",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

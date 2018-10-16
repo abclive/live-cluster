@@ -1,42 +1,43 @@
 matrix:
   include:
-    - os: osx
-      osx_image: xcode9.4
-      language: node_js
-      node_js: "10"
-      env:
-        - ELECTRON_CACHE=$HOME/.cache/electron
-        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
-
-    - os: linux
-      services: docker
-      language: generic
-
+  - os: osx
+    osx_image: xcode9.4
+    language: node_js
+    node_js: 8.11.2
+    env:
+    - ELECTRON_CACHE=$HOME/.cache/electron
+    - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+  - os: linux
+    services: docker
+    language: generic
 cache:
   directories:
-    - node_modules
-    - $HOME/.cache/electron
-    - $HOME/.cache/electron-builder
-
+  - node_modules
+  - "$HOME/.cache/electron"
+  - "$HOME/.cache/electron-builder"
 script:
-  - |
-    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      docker run --rm \
-          $(env | \
-            grep -Eo '^[^\s=]*(DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|_TOKEN|_KEY|AWS_|STRIP|BUILD_)[^\s=]*' | \
-            sed '/^$/d;s/^/-e /' | \
-            paste -sd ' ' \
-          ) \
-          -v ${PWD}:/project \
-          -v ~/.cache/electron:/root/.cache/electron \
-        electronuserland/builder:wine \
-        /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn release --linux --win"
-    else
-      yarn release
-    fi
+- |
+  if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    docker run --rm \
+      -v ${PWD}:/project \
+      -v ~/.cache/electron:/root/.cache/electron \
+      -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+      electronuserland/builder:wine \
+      /bin/bash -c "npm install && npm run build && npm run dist:linux"
+  else
+    npm install
+    npm run build
+    npm run dist:mac
+  fi
 before_cache:
-  - rm -rf $HOME/.cache/electron-builder/wine
-
-branches:
-  except:
-    - "/^v\\d+\\.\\d+\\.\\d+$/"
+- rm -rf $HOME/.cache/electron-builder/wine
+deploy:
+  provider: releases
+  api_key:
+    secure: ACPg/lOXYGH5V//upmoqCunOj9wSC9qbP884yMSSKSaPe4mHvwE+QcFcjby3hCBL7xvYt63Mtvco9fLGH3QRI/H5QmPD/eP6RghRitx4Q+4KRsovouV8B+QYZZAmUN8mn3T1jcTNHIWR2/0Al+P3Zl0F2SXhC+ygXlJ0IWR6ASlNu3fipS6xVnAbkeF3rLF10XIoISAObU/28AXw8kvpBMfsfsZuqRxPWfEQHnm/3FK76nEFoHVE7BG/2vBaCBZ5gBslQB7TMrEdEZvhN23gSWIP7YvOoLdYZAIh0yqmoMBCrjaFgKVP/u37UQmV0NMelEalEIlrGovFbfncJN+/xS444IunJDOQy44IhDBe8hJm9xgz5FAMDOfM+fA69gArPvPn4vBvDhqk5/Om2NUjFy8Ru0Z0gWuKBtiRFdzFuSkIIcCLmkltTJlS/MVcFDF94VhTjqUkgTQk5umkcPiIQvmtQYjCNb7kMvR50JI8HwIQHFb/CfSW07jWZMwsmGQCqNIlLwbv9e/Uvlpxdm0+ZRIegFL7TGXs/QVJYC/rQdtMjHliPUNrlMVxSYxZ68mvnBspfC4AVnlEzerlnpcXkzdLkh5ZjUoZBiGK3u5/et8HczUiaFLfv9U9MuoK30NvtjrpyBquszpcQe6OlxKbwF0YaMS/laDeoH2ipmcZRCs=
+  file_glob: true
+  file:
+    - "dist/Live-Cluster-*-mac.zip"
+    - "dist/Live-Cluster-*.dmg"
+  on:
+    repo: abclive/live-cluster

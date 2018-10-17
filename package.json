@@ -36,7 +36,8 @@
       "build/**/*",
       "node_modules/**/*",
       "./src/app.js",
-      "./src/withRoot.js"
+      "./src/withRoot.js",
+      "./src/controllers/*"
     ],
     "directories":{
       "buildResources": "static"

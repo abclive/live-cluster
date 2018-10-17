@@ -37,7 +37,7 @@ deploy:
     secure: ACPg/lOXYGH5V//upmoqCunOj9wSC9qbP884yMSSKSaPe4mHvwE+QcFcjby3hCBL7xvYt63Mtvco9fLGH3QRI/H5QmPD/eP6RghRitx4Q+4KRsovouV8B+QYZZAmUN8mn3T1jcTNHIWR2/0Al+P3Zl0F2SXhC+ygXlJ0IWR6ASlNu3fipS6xVnAbkeF3rLF10XIoISAObU/28AXw8kvpBMfsfsZuqRxPWfEQHnm/3FK76nEFoHVE7BG/2vBaCBZ5gBslQB7TMrEdEZvhN23gSWIP7YvOoLdYZAIh0yqmoMBCrjaFgKVP/u37UQmV0NMelEalEIlrGovFbfncJN+/xS444IunJDOQy44IhDBe8hJm9xgz5FAMDOfM+fA69gArPvPn4vBvDhqk5/Om2NUjFy8Ru0Z0gWuKBtiRFdzFuSkIIcCLmkltTJlS/MVcFDF94VhTjqUkgTQk5umkcPiIQvmtQYjCNb7kMvR50JI8HwIQHFb/CfSW07jWZMwsmGQCqNIlLwbv9e/Uvlpxdm0+ZRIegFL7TGXs/QVJYC/rQdtMjHliPUNrlMVxSYxZ68mvnBspfC4AVnlEzerlnpcXkzdLkh5ZjUoZBiGK3u5/et8HczUiaFLfv9U9MuoK30NvtjrpyBquszpcQe6OlxKbwF0YaMS/laDeoH2ipmcZRCs=
   file_glob: true
   file:
-    - "dist/Live-Cluster-*-mac.zip"
-    - "dist/Live-Cluster-*.dmg"
+    - "dist/live-cluster-*-mac.zip"
+  skip_cleanup: true
   on:
     repo: abclive/live-cluster

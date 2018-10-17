@@ -31,7 +31,6 @@
   "postinstall": "electron-builder install-app-deps",
   "build": {
     "appId": "live-cluster",
-    "asar": true,
     "extends": null,
     "files": [
       "build/**/*",

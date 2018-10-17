@@ -34,7 +34,9 @@
     "extends": null,
     "files": [
       "build/**/*",
-      "node_modules/**/*"
+      "node_modules/**/*",
+      "./src/app.js",
+      "./src/withRoot.js"
     ],
     "directories":{
       "buildResources": "static"

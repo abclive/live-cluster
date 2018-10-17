@@ -27,7 +27,7 @@ script:
   else
     npm install
     CI=false npm run build
-    npm run dist:mac
+    npm run dist
   fi
 before_cache:
 - rm -rf $HOME/.cache/electron-builder/wine

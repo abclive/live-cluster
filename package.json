@@ -20,14 +20,15 @@
   "homepage": "./",
   "main": "./src/app.js",
   "scripts": {
-    "pack": "build --dir",
-    "dist": "build -mwl",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "electron": "electron ."
   },
+  "postinstall": "electron-builder install-app-deps",
   "build": {
     "appId": "live-cluster",
     "asar": true,
